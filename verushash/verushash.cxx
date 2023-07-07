@@ -87,7 +87,7 @@ void Verushash::verushash_v2b2(std::string const bytes, void * ptrResult)
     }
 
     CBlockHeader bh;
-    CDataStream s(bytes.data(), bytes.data() + bytes.size(), SER_GETHASH, 0);
+    CDataStream s(bytes.data(), bytes.data() + bytes.size(), 1, 170009);
 
     try
     {
