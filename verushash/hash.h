@@ -9,15 +9,10 @@
 #include "crypto/ripemd160.h"
 #include "crypto/sha256.h"
 #include "crypto/verus_hash.h"
-#include "crypto/keccak.h"
-#include "crypto/sph_types.h"
-#include "crypto/sph_keccak.h"
+#include "crypto/uint256.h"
+#include "crypto/sodium.h"
 #include "prevector.h"
 #include "serialize.h"
-#include "crypto/uint256.h"
-
-#include "sodium.h"
-
 #include <vector>
 
 typedef uint256 ChainCode;
@@ -371,45 +366,6 @@ public:
 
     template<typename T>
     CVerusHashV2bWriter& operator<<(const T& obj) {
-        // Serialize to this stream
-        ::Serialize(*this, obj);
-        return (*this);
-    }
-};
-
-/** A writer stream (for serialization) that computes a 256-bit Keccack256 hash */
-class CKeccack256Writer
-{
-private:
-    sph_keccak256_context ctx_keccak;
-
-public:
-  
-    CKeccack256Writer(int nTypeIn,  int nVersionIn)
-    {
-        sph_keccak256_init(&ctx_keccak); 
-    }
-
-    CKeccack256Writer() { sph_keccak256_init(&ctx_keccak); }
-
-    void Reset() { sph_keccak256_init(&ctx_keccak); }
-
-    CKeccack256Writer& write(const char *pch, size_t size) {
-        sph_keccak256 (&ctx_keccak, pch, size);
-        return (*this);
-    }
-
-    // invalidates the object for further writing
-    uint256 GetHash() {
-        uint256 result;
-        sph_keccak256_close(&ctx_keccak, ((unsigned char*)&result));;
-        return result;
-    }
-
-    sph_keccak256_context &GetState() { return ctx_keccak; }
-
-    template<typename T>
-    CKeccack256Writer& operator<<(const T& obj) {
         // Serialize to this stream
         ::Serialize(*this, obj);
         return (*this);
