@@ -39,7 +39,7 @@ set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/crypto/haraka.c PROPERTI
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # BOOST
-#find_package(Threads REQUIRED COMPONENTS)
+# find_package(Threads REQUIRED COMPONENTS)
 # compile boost statically
 set(Boost_USE_STATIC_LIBS ON)
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
