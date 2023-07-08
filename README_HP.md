@@ -8,6 +8,7 @@ $ cd ./verushash
 $ cmake .  
 $ make  
 $ cp libverushash.a ./build/libverushash.a 
+$ swig -c++ -go -intgosize 64 -cgo verushash.i
 $ cd ..
 $ go run main.go
 ```
